@@ -19,8 +19,10 @@ def detect(gray, frme): # function that accepts a greyscale and the original fra
         eyes = eye_cascade.detectMultiScale(rt_gray, 1.2, 15) # now applying multiscale inside suspect region 
         # to look for the eyes
         for (ex, ey, ew, eh) in eyes: # applied to each eye detected 
-            cv2.rectangle(rt_color, (ex, ey), (ex+ew, ey+eh), (0,255, 0), 2) # put rectangle around suspect eyes in suspect face
-        smile = smile_cascade.detectMultiScale(rt_gray, scaleFactor = 1.7,minNeighbors =12)
+            #cv2.rectangle(rt_color, (ex, ey), (ex+ew, ey+eh), (0,255, 0), 2) #put rectangle around suspect eyes as option
+            cv2.circle(rt_color, center = (ex+ew//2, ey+eh//2), radius = eh//4, #put circle around suspect eyes as option
+           color = (255,255,0), thickness = 1)
+        smile = smile_cascade.detectMultiScale(rt_gray, scaleFactor = 1.5,minNeighbors =10)
         for (sx, sy, sw, sh) in smile: 
             cv2.rectangle(rt_color, (sx,sy), (sx+sw, sy+sh), (255,0,255),2)
     return frme
